@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Prediction Result - Cyber Attack Prediction</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../static/assets/css/main.css" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="/" class="logo d-flex align-items-center me-auto">
+        <h1 class="sitename">CyberShield</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/home">Home</a></li>
+          <li><a href="/home1">Predict</a></li>
+          <li><a href="/graphs">Data Visualization</a></li>
+          <li class="dropdown"><a href="#"><span>Notebook</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="../static/Cyber_Attack-ML_DL.html">ML/DL Notebook</a></li>
+              <li><a href="../static/Cyber_Attack-Gen AI.html">Gen AI Notebook</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="/">Signout</a>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background" style="height: 300px; min-height: 0;">
+      <div class="container">
+        <div class="row gy-4">
+          <h1 style="font-size: 50px; text-align: center; text-transform: uppercase;">Prediction Result</h1>
+        </div>
+      </div>
+    </section><!-- /Hero Section -->
+
+    <!-- Result Section -->
+    <section id="result" class="result section">
+      <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+
+            <!-- Main Result Card -->
+            <div class="result-card">
+              <!-- Hidden data for JavaScript -->
+              <div id="prediction-data" data-label="{{ prediction_label }}" data-confidence="{{ confidence }}"
+                style="display: none;"></div>
+
+              <div class="result-header">
+                <div class="result-icon-wrapper">
+                  <i id="result-icon" class="bi result-icon"></i>
+                </div>
+                <div class="result-title-section">
+                  <h2 id="result-title" class="result-title">{{ prediction_label }}</h2>
+                  <span id="result-severity" class="result-severity"></span>
+                </div>
+              </div>
+
+              <!-- Confidence Score -->
+              <div class="confidence-section">
+                <div class="confidence-label">
+                  <i class="bi bi-graph-up-arrow"></i>
+                  <span>Confidence Score</span>
+                </div>
+                <div class="confidence-display">
+                  <div class="confidence-bar-wrapper">
+                    <div id="confidence-bar" class="confidence-bar" style="width: {{ confidence }}%"></div>
+                  </div>
+                  <span id="confidence-value" class="confidence-value">{{ confidence }}%</span>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="description-section">
+                <h4><i class="bi bi-info-circle"></i> Description</h4>
+                <p id="attack-description"></p>
+              </div>
+
+              <!-- Activities & Safety Measures -->
+              <div class="row g-4 mt-2">
+                <!-- Activities Section -->
+                <div class="col-lg-6">
+                  <div class="action-section">
+                    <h4>
+                      <i class="bi bi-list-check"></i>
+                      Immediate Actions Required
+                    </h4>
+                    <ul id="activities-list" class="action-list">
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Safety Measures Section -->
+                <div class="col-lg-6">
+                  <div class="action-section">
+                    <h4>
+                      <i class="bi bi-shield-check"></i>
+                      Safety Measures
+                    </h4>
+                    <ul id="safety-measures-list" class="action-list">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="result-actions">
+                <a href="/home1" class="btn-action btn-primary">
+                  <i class="bi bi-arrow-left"></i> Make Another Prediction
+                </a>
+                <a href="/graphs" class="btn-action btn-secondary">
+                  <i class="bi bi-bar-chart"></i> View Visualizations
+                </a>
+              </div>
+
+            </div><!-- End Result Card -->
+
+          </div>
+        </div>
+      </div>
+    </section><!-- /Result Section -->
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">CyberShield</strong> <span>All Rights Reserved</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../static/assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="../static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+
+  <script>
+    // Attack information dictionary
+    const attackInfo = {
+      "BENIGN": {
+        "icon": "bi-shield-check",
+        "color": "success",
+        "severity": "Safe",
+        "confidence_color": "success",
+        "description": "No malicious activity detected. Normal network traffic.",
+        "activities": [
+          "Continue monitoring network traffic",
+          "Maintain regular security audits",
+          "Keep security systems updated",
+          "Document normal traffic patterns"
+        ],
+        "safety_measures": [
+          "Monitor for any unusual patterns",
+          "Review security logs regularly",
+          "Ensure firewall rules are active",
+          "Keep intrusion detection systems enabled"
+        ]
+      },
+      "Bot": {
+        "icon": "bi-bug",
+        "color": "danger",
+        "severity": "Critical",
+        "confidence_color": "danger",
+        "description": "Botnet activity detected. This indicates compromised devices are being controlled remotely.",
+        "activities": [
+          "Immediately isolate affected devices from network",
+          "Identify and block command and control servers",
+          "Analyze infected devices for malware",
+          "Report to security team and escalate incident",
+          "Initiate incident response procedures"
+        ],
+        "safety_measures": [
+          "Disconnect compromised devices immediately",
+          "Block all communication with C&C servers",
+          "Scan and clean infected systems",
+          "Reset credentials for affected accounts",
+          "Update antivirus and security patches",
+          "Review network access logs"
+        ]
+      },
+      "DDoS": {
+        "icon": "bi-activity",
+        "color": "danger",
+        "severity": "High",
+        "confidence_color": "warning",
+        "description": "Distributed Denial of Service attack detected. Multiple sources are flooding your network.",
+        "activities": [
+          "Activate DDoS mitigation services",
+          "Identify and block attack sources",
+          "Enable rate limiting on firewalls",
+          "Contact ISP for traffic filtering",
+          "Scale up network resources if needed"
+        ],
+        "safety_measures": [
+          "Implement traffic filtering rules",
+          "Use CDN or cloud-based DDoS protection",
+          "Monitor bandwidth usage closely",
+          "Block suspicious IP addresses",
+          "Enable auto-scaling if available",
+          "Maintain backup communication channels"
+        ]
+      },
+      "DoS GoldenEye": {
+        "icon": "bi-exclamation-triangle",
+        "color": "danger",
+        "severity": "High",
+        "confidence_color": "warning",
+        "description": "GoldenEye DoS attack detected. HTTP flood attack targeting web servers.",
+        "activities": [
+          "Block identified attack sources",
+          "Enable HTTP rate limiting",
+          "Activate web application firewall",
+          "Monitor server resource usage",
+          "Consider using load balancers"
+        ],
+        "safety_measures": [
+          "Implement HTTP request throttling",
+          "Enable CAPTCHA for suspicious traffic",
+          "Monitor server CPU and memory",
+          "Block malicious IP ranges",
+          "Use anti-DoS security appliances",
+          "Review web server configurations"
+        ]
+      },
+      "DoS Hulk": {
+        "icon": "bi-lightning-charge",
+        "color": "danger",
+        "severity": "High",
+        "confidence_color": "warning",
+        "description": "Hulk DoS attack detected. HTTP GET flood attack overwhelming web servers.",
+        "activities": [
+          "Immediately rate limit HTTP requests",
+          "Block attacking IP addresses",
+          "Enable connection limits per IP",
+          "Scale server resources temporarily",
+          "Activate mitigation systems"
+        ],
+        "safety_measures": [
+          "Implement strict HTTP request limits",
+          "Use web application firewalls",
+          "Enable IP-based rate limiting",
+          "Monitor response times",
+          "Block suspicious user agents",
+          "Implement request queue management"
+        ]
+      },
+      "DoS Slowhttptest": {
+        "icon": "bi-hourglass-split",
+        "color": "danger",
+        "severity": "High",
+        "confidence_color": "warning",
+        "description": "Slow HTTP attack detected. Attackers are holding connections open to exhaust server resources.",
+        "activities": [
+          "Configure HTTP timeout settings",
+          "Block slow HTTP connections",
+          "Enable connection timeout limits",
+          "Monitor connection pool usage",
+          "Review web server configurations"
+        ],
+        "safety_measures": [
+          "Set shorter HTTP timeouts",
+          "Limit connections per IP address",
+          "Monitor connection states",
+          "Use reverse proxy with timeout protection",
+          "Enable connection rate limiting",
+          "Review and harden web server settings"
+        ]
+      },
+      "DoS slowloris": {
+        "icon": "bi-clock-history",
+        "color": "danger",
+        "severity": "High",
+        "confidence_color": "warning",
+        "description": "Slowloris DoS attack detected. Attackers are sending partial HTTP requests to exhaust server connections.",
+        "activities": [
+          "Configure HTTP timeout configurations",
+          "Block incomplete HTTP requests",
+          "Enable connection timeout protection",
+          "Monitor active connection counts",
+          "Review server connection limits"
+        ],
+        "safety_measures": [
+          "Set aggressive HTTP timeouts",
+          "Limit maximum connections per IP",
+          "Use load balancers with timeout protection",
+          "Monitor connection pool exhaustion",
+          "Enable request validation",
+          "Harden web server configurations"
+        ]
+      },
+      "Heartbleed": {
+        "icon": "bi-heart-pulse",
+        "color": "danger",
+        "severity": "Critical",
+        "confidence_color": "danger",
+        "description": "Heartbleed vulnerability attack detected. Critical OpenSSL vulnerability exploitation attempt.",
+        "activities": [
+          "Immediately patch OpenSSL libraries",
+          "Revoke and regenerate SSL certificates",
+          "Change all system passwords",
+          "Review SSL/TLS configurations",
+          "Perform security audit of affected systems"
+        ],
+        "safety_measures": [
+          "Update OpenSSL to patched version",
+          "Replace all SSL certificates",
+          "Rotate all credentials",
+          "Enable SSL/TLS monitoring",
+          "Disable vulnerable TLS versions",
+          "Implement certificate pinning"
+        ]
+      },
+      "Infiltration": {
+        "icon": "bi-person-badge",
+        "color": "danger",
+        "severity": "Critical",
+        "confidence_color": "danger",
+        "description": "Infiltration attack detected. Unauthorized access attempt or successful breach.",
+        "activities": [
+          "Immediately isolate affected systems",
+          "Identify compromised accounts",
+          "Review access logs and audit trails",
+          "Change all potentially compromised credentials",
+          "Notify security team and management",
+          "Begin forensic investigation"
+        ],
+        "safety_measures": [
+          "Disconnect compromised systems from network",
+          "Revoke access for compromised accounts",
+          "Enable multi-factor authentication",
+          "Review and restrict network access",
+          "Monitor for data exfiltration",
+          "Implement network segmentation",
+          "Enhance logging and monitoring"
+        ]
+      },
+      "PortScan": {
+        "icon": "bi-search",
+        "color": "warning",
+        "severity": "Medium",
+        "confidence_color": "warning",
+        "description": "Port scanning activity detected. Attackers are probing your network for open ports and services.",
+        "activities": [
+          "Block scanning IP addresses",
+          "Review firewall rules and access controls",
+          "Close unnecessary open ports",
+          "Monitor for follow-up attacks",
+          "Document scanning patterns"
+        ],
+        "safety_measures": [
+          "Implement firewall rules to block scanners",
+          "Close unused ports and services",
+          "Use port knocking for sensitive services",
+          "Enable intrusion detection systems",
+          "Monitor network traffic patterns",
+          "Review and harden system configurations",
+          "Use VPN for remote access"
+        ]
+      }
+    };
+
+    // Populate attack information on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const predictionData = document.getElementById('prediction-data');
+      const predictionLabel = predictionData.getAttribute('data-label');
+      const confidence = parseFloat(predictionData.getAttribute('data-confidence'));
+
+      // Get attack info or use default for errors
+      const info = attackInfo[predictionLabel] || {
+        icon: "bi-question-circle",
+        color: "secondary",
+        severity: "Unknown",
+        confidence_color: "secondary",
+        description: "Unknown attack type detected.",
+        activities: ["Contact security team immediately"],
+        safety_measures: ["Review security logs", "Monitor network activity"]
+      };
+
+      // Update icon
+      const iconElement = document.getElementById('result-icon');
+      iconElement.className = `bi ${info.icon} result-icon`;
+
+      // Update severity badge
+      const severityElement = document.getElementById('result-severity');
+      severityElement.className = `result-severity severity-${info.color}`;
+      severityElement.textContent = info.severity;
+
+      // Update confidence bar color
+      const confidenceBar = document.getElementById('confidence-bar');
+      confidenceBar.className = `confidence-bar confidence-${info.confidence_color}`;
+      confidenceBar.style.width = `${confidence}%`;
+
+      // Update description
+      document.getElementById('attack-description').textContent = info.description;
+
+      // Update activities list
+      const activitiesList = document.getElementById('activities-list');
+      activitiesList.innerHTML = '';
+      info.activities.forEach(activity => {
+        const li = document.createElement('li');
+        li.innerHTML = `<i class="bi bi-arrow-right-circle"></i><span>${activity}</span>`;
+        activitiesList.appendChild(li);
+      });
+
+      // Update safety measures list
+      const safetyMeasuresList = document.getElementById('safety-measures-list');
+      safetyMeasuresList.innerHTML = '';
+      info.safety_measures.forEach(measure => {
+        const li = document.createElement('li');
+        li.innerHTML = `<i class="bi bi-check-circle"></i><span>${measure}</span>`;
+        safetyMeasuresList.appendChild(li);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
